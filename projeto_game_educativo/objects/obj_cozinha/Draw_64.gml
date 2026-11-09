@@ -17,6 +17,15 @@ var cor_claro = make_color_rgb(255, 248, 229);
 var cor_ouro = make_color_rgb(243, 190, 95);
 var cor_verde = make_color_rgb(75, 160, 103);
 
+// Conversao das coordenadas originais (960 x 640) para a area da GUI.
+// Mantem as posicoes logicas de movimento e colisao inalteradas.
+var ui_map_x = function(_x) {
+    return 24 + (_x / 960) * (1256 - 24);
+};
+var ui_map_y = function(_y) {
+    return 165 + ((_y - 110) / (615 - 110)) * (626 - 165);
+};
+
 // Evita herdar alinhamento/alpha de telas ou eventos anteriores.
 draw_set_alpha(1);
 draw_set_halign(fa_left);
@@ -418,7 +427,7 @@ if (corte_ativo || arroz_ativo || frango_ativo || fruta_ativo || leite_ativo || 
         draw_text_transformed(640, 342, string(fruta_alvo), 3, 3, 0);
         draw_set_color(c_white);
         draw_text(640, 422, "Acertos: " + string(fruta_acertos) + "/" + string(fruta_meta)
-                       + "   |   Tempo: " + string(ceil(fruta_tempo/room_speed)) + " s");
+                       + "   |   Tempo: " + string(ceil(fruta_tempo/game_get_speed(gamespeed_fps))) + " s");
         draw_text(640, 447, "Bonus: ate 150 XP por velocidade");
     } else if (corte_ativo) {
         draw_text(640, 423, "Cortes: " + string(corte_acertos) + "/3   |   Erros: " + string(corte_erros));
